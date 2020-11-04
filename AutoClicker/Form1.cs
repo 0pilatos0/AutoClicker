@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace AutoClicker
 {
-    public partial class Form1 : Form
+    public partial class AutoClicker : Form
     {
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
@@ -28,7 +28,7 @@ namespace AutoClicker
         public int intervals = 5;
         public bool Click = false;
         public int parsedValue;
-        public Form1()
+        public AutoClicker()
         {
             InitializeComponent();
         }
@@ -36,7 +36,7 @@ namespace AutoClicker
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            Thread AC = new Thread(AutoClick);
+            Thread AC = new Thread(AutoClick) { IsBackground = true };
             backgroundWorker1.RunWorkerAsync();
             AC.Start();
         }
@@ -61,8 +61,9 @@ namespace AutoClicker
             {
                 if (checkBox1.Checked)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(00);
                     threads = true;
+                    
                 }
                 else
                 {
@@ -74,12 +75,13 @@ namespace AutoClicker
 
         private void button1_Click(object sender, EventArgs e)
         {
-            {
+            
             if(!int.TryParse(textBox1.Text, out parsedValue))
+            {
                 MessageBox.Show("Please enter an number!!");
                 return;
             }
-            else
+            else 
             {
                 intervals = int.Parse(textBox1.Text);
                 Console.WriteLine(intervals);
